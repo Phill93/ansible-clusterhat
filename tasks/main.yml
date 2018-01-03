@@ -30,7 +30,7 @@
     - name: Disable APIPA addresses
       become: true
       lineinfile:
-        path: /etc/dhcpd.conf
+        path: /etc/dhcpcd.conf
         line: "denyinterfaces eth0 ethpi1 ethpi2 ethpi3 ethpi4"
         state: present
 
