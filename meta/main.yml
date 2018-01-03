@@ -1,6 +1,6 @@
 galaxy_info:
   author: Phill93
-  description: This Role installs and conigurate all necessary software to use the Raspberry Clusterhat
+  description: This Role installs and configurate all necessary software to use the Raspberry Clusterhat
 
   license: GPLv3
 

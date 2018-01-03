@@ -1,7 +1,7 @@
 Role Name
 =========
 
-his Role installs and conigurate all necessary software to use the Raspberry [Clusterhat](https://clusterhat.com)
+This Role installs and conifgurate all necessary software to use the Raspberry [Clusterhat](https://clusterhat.com)
 
 
 Requirements
