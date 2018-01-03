@@ -1,2 +1,104 @@
 ---
 # tasks file for phill93.clusterhat
+    - name: Installing required software
+      become: true
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        "{{ clusterhat_required_packages }}"
+
+    - name: Installing Commandline Utility for the Clusterhat
+      become: true
+      copy:
+        src: "{{ clusterhat_cli_url }}"
+        dest: "/sbin/clusterhat"
+        mode: 0755
+        owner: root
+        group: root
+
+    - name: Installing GUI Utility for the Clusterhat
+      become: true
+      copy:
+        src: "{{ clusterhat_gui_url }}"
+        dest: "/sbin/clusterhat"
+        mode: 0755
+        owner: root
+        group: root
+      when: clusterhat_gui
+
+    - name: Disable APIPA addresses
+      become: true
+      lineinfile:
+        path: /etc/dhcpd.conf
+        line: "denyinterfaces eth0 ethpi1 ethpi2 ethpi3 ethpi4"
+        state: present
+
+    - name: Automatic Clusterhat init at Boot
+      become: true
+      lineinfile:
+        path: /etc/rc.local
+        regexp: "^exit 0"
+        insertbefore: "/sbin/clusterhat init"
+        state: present
+
+    - name: Enable UART
+      become: true
+      lineinfile:
+        path: /boot/config.txt
+        regexp: "^#enable_uart="
+        line: "enable_uart=1"
+        state: present
+      notify: reboot
+
+    - name: Enable I2C
+      notify: reboot
+      block:
+        - lineinfile:
+            path: /boot/config.txt
+            regexp: "^#dtparam=i2c_arm"
+            line: "dtparam=i2c_arm"
+          become: true
+
+        - lineinfile:
+            path: /etc/modules
+            line: "i2c-dev"
+            state: present
+          become: true
+
+    - name: Installing network configuration
+      become: true
+      copy:
+        src: "{{ clusterhat_network_cfg_url }}"
+        dest: /etc/network/interfaces.d/clusterhat
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Installing udev rules
+      become: true
+      copy:
+        src: "{{ clusterhat_udev_url }}"
+        dest: /etc/udev/rules.d/90-clusterhat.rules
+        mode: 0644
+        owner: root
+        group: root
+
+    - name: Installing minicom config
+      become: true
+      copy:
+        src: "{{ item.value }}"
+        dest: "/etc/minicom/minirc.{{ item.key }}"
+        mode: 0644
+        owner: root
+        group: root
+      with_dict: "{{ clusterhat_minicom_cfg_urls }}"
+
+    - name: Patching cmdline for node p{{ clusterhat_node_slave_number }}
+      become: true
+      lineinfile:
+        path: /boot/cmdline
+        regexp: "^.*"
+        line: '\1 init=/sbin/reconfig-clusterhat p{{ clusterhat_node_slave_number}}'
+      notify: reboot
+      when: clusterhat_node_type is "slave"

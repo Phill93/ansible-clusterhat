@@ -1,2 +1,19 @@
 ---
 # vars file for phill93.clusterhat
+  clusterhat_required_packages:
+    - bridge-utils
+    - wiringpi
+    - screen
+    - minicom
+    - python-smbus
+
+# Urls
+  clusterhat_cli_url: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/sbin/clusterhat
+  clusterhat_gui_url: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/sbin/xclusterhat
+  clusterhat_network_cfg_url: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/network/interfaces.d/clusterhat
+  clusterhat_udev_url:  https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/udev/rules.d/90-clusterhat.rules
+  clusterhat_minicom_cfg_urls:
+    p1: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/minicom/minirc.p1
+    p2: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/minicom/minirc.p2
+    p3: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/minicom/minirc.p3
+    p4: https://raw.githubusercontent.com/burtyb/clusterhat-image/master/files/etc/minicom/minirc.p4

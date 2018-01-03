@@ -1,0 +1,6 @@
+---
+# defaults file for phill93.clusterhat
+  clusterhat_node_type: master
+  clusterhat_node_slave_number: 1
+  clusterhat_gui: False
+  clusterhat_internal_vlan: False
