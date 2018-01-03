@@ -52,18 +52,19 @@
       notify: reboot
 
     - name: Enable I2C
-      notify: reboot
       block:
         - lineinfile:
             path: /boot/config.txt
             regexp: "^#dtparam=i2c_arm"
             line: "dtparam=i2c_arm"
+          notify: reboot
           become: true
 
         - lineinfile:
             path: /etc/modules
             line: "i2c-dev"
             state: present
+          notify: reboot
           become: true
 
     - name: Installing network configuration
