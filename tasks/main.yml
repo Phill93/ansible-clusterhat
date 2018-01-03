@@ -10,8 +10,8 @@
 
     - name: Installing Commandline Utility for the Clusterhat
       become: true
-      copy:
-        src: "{{ clusterhat_cli_url }}"
+      get_url:
+        url: "{{ clusterhat_cli_url }}"
         dest: "/sbin/clusterhat"
         mode: 0755
         owner: root
@@ -19,8 +19,8 @@
 
     - name: Installing GUI Utility for the Clusterhat
       become: true
-      copy:
-        src: "{{ clusterhat_gui_url }}"
+      get_url:
+        url: "{{ clusterhat_gui_url }}"
         dest: "/sbin/clusterhat"
         mode: 0755
         owner: root
@@ -69,8 +69,8 @@
 
     - name: Installing network configuration
       become: true
-      copy:
-        src: "{{ clusterhat_network_cfg_url }}"
+      get_url:
+        url: "{{ clusterhat_network_cfg_url }}"
         dest: /etc/network/interfaces.d/clusterhat
         mode: 0644
         owner: root
@@ -78,8 +78,8 @@
 
     - name: Installing udev rules
       become: true
-      copy:
-        src: "{{ clusterhat_udev_url }}"
+      get_url:
+        url: "{{ clusterhat_udev_url }}"
         dest: /etc/udev/rules.d/90-clusterhat.rules
         mode: 0644
         owner: root
@@ -87,8 +87,8 @@
 
     - name: Installing minicom config
       become: true
-      copy:
-        src: "{{ item.value }}"
+      get_url:
+        url: "{{ item.value }}"
         dest: "/etc/minicom/minirc.{{ item.key }}"
         mode: 0644
         owner: root
