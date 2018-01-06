@@ -1,0 +1,12 @@
+---
+  - name: Initiate Reboot
+    command: /sbin/reboot
+    async: 1
+    poll: 0
+    become: True
+  - name: Waiting for Reboot
+    pause:
+      seconds: 5
+  - name: Waiting until the host is back
+    local_action: wait_for host="{{ ansible_host }}" port=22 timeout=300
+    become: False
