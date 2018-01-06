@@ -53,14 +53,16 @@
 
     - name: Enable I2C
       block:
-        - lineinfile:
+        - name: Enable I2C - Patching /boot/config.txt
+          lineinfile:
             path: /boot/config.txt
             regexp: "^#dtparam=i2c_arm"
             line: "dtparam=i2c_arm"
           notify: reboot
           become: true
 
-        - lineinfile:
+        - name: Enable I2C - Patching /etc/modules
+          lineinfile:
             path: /etc/modules
             line: "i2c-dev"
             state: present
