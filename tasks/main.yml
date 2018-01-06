@@ -38,8 +38,8 @@
       become: true
       lineinfile:
         path: /etc/rc.local
-        regexp: "^exit 0"
-        insertbefore: "/sbin/clusterhat init"
+        insertbefore: "^exit 0"
+        line: "/sbin/clusterhat init"
         state: present
 
     - name: Enable UART
