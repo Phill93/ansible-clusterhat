@@ -70,13 +70,24 @@
           become: true
 
     - name: Installing network configuration
-      become: true
-      get_url:
-        url: "{{ clusterhat_network_cfg_url }}"
-        dest: /etc/network/interfaces.d/clusterhat
-        mode: 0644
-        owner: root
-        group: root
+      block:
+        - name: Installing network configuration - /etc/network/interfaces.d/clusterhat
+          get_url:
+            url: "{{ clusterhat_network_cfg_url }}"
+            dest: /etc/network/interfaces.d/clusterhat
+            mode: 0644
+            owner: root
+            group: root
+          become: true
+
+        - name: Installing network configuration - /etc/network/interfaces.d/bridge
+          copy:
+            src: bridge
+            dest: /etc/network/interfaces.d/bridge
+            mode: 0644
+            owner: root
+            group: root
+          become: true
 
     - name: Installing udev rules
       become: true
