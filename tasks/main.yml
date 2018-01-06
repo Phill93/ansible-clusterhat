@@ -115,4 +115,4 @@
         regexp: "^.*"
         line: '\1 init=/sbin/reconfig-clusterhat p{{ clusterhat_node_slave_number}}'
       notify: reboot
-      when: clusterhat_node_type is "slave"
+      when: clusterhat_node_type == "slave"
